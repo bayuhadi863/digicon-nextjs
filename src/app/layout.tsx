@@ -5,8 +5,8 @@ import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import { ColorSchemeScript, MantineProvider, createTheme } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
-import { AuthContextProvider } from '@/context/auth-context';
-import Middleware from '@/middleware/middleware';
+// import { AuthContextProvider } from '@/context/auth-context';
+// import Middleware from '@/middleware/middleware';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -41,9 +41,11 @@ export default function RootLayout({
           defaultColorScheme='auto'
         >
           <Notifications />
-          <AuthContextProvider>
-            <Middleware>{children}</Middleware>
-          </AuthContextProvider>
+          {/* <AuthContextProvider> */}
+          {/* <Middleware> */}
+          {children}
+          {/* </Middleware> */}
+          {/* </AuthContextProvider> */}
         </MantineProvider>
       </body>
     </html>

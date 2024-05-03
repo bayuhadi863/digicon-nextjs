@@ -5,10 +5,12 @@ import React, { useState, useEffect } from 'react';
 // Lib / Utils
 import { getUser } from '@/firebase/auth/getUser';
 import signOutUser from '@/firebase/auth/signout';
+import { createClient } from '@/utils/supabase/client';
 
 // mantine import
 import { AppShell, Burger, Group, Skeleton, Text, NavLink } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
 
 // icons import
 import { IoLogOutOutline } from 'react-icons/io5';
@@ -23,19 +25,31 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
 
   const [signOutLoading, setSignOutLoading] = useState(false);
 
+  const router = useRouter();
+
   const handleSignOut = async () => {
     setSignOutLoading(true);
-    const error = await signOutUser();
+
+    const supabase = createClient();
+    const { error } = await supabase.auth.signOut();
 
     if (error) {
-      console.error('Sign Out Error:', error);
       setSignOutLoading(false);
+      notifications.show({
+        title: 'Login Failed!',
+        message: error.message,
+        color: 'red',
+      });
       return;
     }
 
     setSignOutLoading(false);
-    console.log('Sign Out Success');
-    return;
+    notifications.show({
+      title: 'Logout Success!',
+      message: 'See you again!',
+      color: 'green',
+    });
+    return router.push('/login');
   };
 
   return (

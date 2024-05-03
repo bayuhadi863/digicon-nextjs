@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // mantine import
 import { TextInput, PasswordInput, Checkbox, Anchor, Paper, Title, Text, Group, Button, LoadingOverlay, Box } from '@mantine/core';
@@ -12,9 +12,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 // lib / utils import
-import signIn from '@/firebase/auth/signin';
-import { getUser } from '@/firebase/auth/getUser';
-import { useAuthContext } from '@/context/auth-context';
+// import signIn from '@/firebase/auth/signin';
+// import { getUser } from '@/firebase/auth/getUser';
+// import { useAuthContext } from '@/context/auth-context';
+import { createClient } from '@/utils/supabase/client';
 
 const LoginPage = () => {
   const form = useForm({
@@ -40,7 +41,14 @@ const LoginPage = () => {
 
     setIsLoading(true);
 
-    const { result, error } = await signIn(email, password);
+    // const { result, error } = await signIn(email, password);
+
+    const supabase = createClient();
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
 
     if (error) {
       setIsLoading(false);
@@ -52,16 +60,16 @@ const LoginPage = () => {
       return;
       // return console.dir(error);
     }
+    setIsLoading(false);
+    // console.log('Sign In Success:', data);
 
-    console.log('Sign In Success:', result);
-    router.push('/');
     notifications.show({
       title: 'Login Success!',
       message: 'Welcome to Digicon!',
       color: 'green',
     });
 
-    return;
+    return router.push('/');
   };
 
   return (
@@ -81,13 +89,6 @@ const LoginPage = () => {
             href='/register'
           >
             Create account
-          </Anchor>
-          <Anchor
-            size='sm'
-            component={Link}
-            href='/'
-          >
-            Home
           </Anchor>
         </Text>
 

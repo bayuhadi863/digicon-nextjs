@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 
 // mantine import
-import { TextInput, PasswordInput, Checkbox, Anchor, Paper, Title, Text, Group, Button, LoadingOverlay, Box } from '@mantine/core';
+import { TextInput, PasswordInput, Anchor, Paper, Title, Text, Button, LoadingOverlay, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
@@ -12,8 +12,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 // lib / utils import
-import signUp from '@/firebase/auth/signup';
-
+// import signUp from '@/firebase/auth/signup';
+import { createClient } from '@/utils/supabase/client';
 
 const RegisterPage = () => {
   const form = useForm({
@@ -43,7 +43,17 @@ const RegisterPage = () => {
 
     setIsLoading(true);
 
-    const { result, error } = await signUp(email, password);
+    const supabase = createClient();
+
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        emailRedirectTo: `${process.env.API_URL}`,
+      },
+    });
+
+    // const { result, error } = await signUp(email, password);
 
     if (error) {
       setIsLoading(false);
@@ -57,18 +67,16 @@ const RegisterPage = () => {
     }
 
     // else successful
-    console.log(result);
+    console.log(data);
     setIsLoading(false);
-    router.push('/');
     notifications.show({
       title: 'Registrasion Success!',
       message: 'You have successfully registered!',
       color: 'green',
     });
 
-    return;
+    return router.push('/');
   };
-
 
   return (
     <div className='flex justify-center items-center min-h-screen my-8 mx-4'>
