@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 
 // Lib / Utils
-import { getUser } from '@/firebase/auth/getUser';
-import signOutUser from '@/firebase/auth/signout';
 import { createClient } from '@/utils/supabase/client';
 
 // mantine import

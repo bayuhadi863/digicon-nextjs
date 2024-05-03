@@ -12,7 +12,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 // lib / utils import
-// import signUp from '@/firebase/auth/signup';
 import { createClient } from '@/utils/supabase/client';
 
 const RegisterPage = () => {
@@ -52,8 +51,6 @@ const RegisterPage = () => {
         emailRedirectTo: `${process.env.API_URL}`,
       },
     });
-
-    // const { result, error } = await signUp(email, password);
 
     if (error) {
       setIsLoading(false);

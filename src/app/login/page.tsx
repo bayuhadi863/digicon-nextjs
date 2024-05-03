@@ -12,9 +12,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 // lib / utils import
-// import signIn from '@/firebase/auth/signin';
-// import { getUser } from '@/firebase/auth/getUser';
-// import { useAuthContext } from '@/context/auth-context';
 import { createClient } from '@/utils/supabase/client';
 
 const LoginPage = () => {
