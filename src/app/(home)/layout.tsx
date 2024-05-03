@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // Lib / Utils
 import { createClient } from '@/utils/supabase/client';
 
 // mantine import
-import { AppShell, Burger, Group, Skeleton, Text, NavLink } from '@mantine/core';
+import { AppShell, Burger, Group, Text, NavLink } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 
@@ -17,8 +17,6 @@ import { IoLogOutOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = getUser();
-
   const [opened, { toggle }] = useDisclosure();
 
   const [signOutLoading, setSignOutLoading] = useState(false);
