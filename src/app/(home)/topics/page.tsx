@@ -24,7 +24,7 @@ const TopicPage = () => {
           Request Topic
         </Button>
       </div>
-      <div className='grid grid-cols-2 gap-10 mb-6'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-6'>
         <PopularTopics />
         <MostFollowedTopics />
       </div>

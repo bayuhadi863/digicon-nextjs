@@ -10,7 +10,7 @@ import { AppShell, Burger, Group, Text, NavLink } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 // icons import
-import { IoLogOutOutline } from 'react-icons/io5';
+
 import { GoHome } from 'react-icons/go';
 import { MdOutlineTopic } from 'react-icons/md';
 // next js import
@@ -22,6 +22,9 @@ import CreateButton from '@/components/home/create-button';
 import Footer from '@/components/footer';
 import ProfileAvatar from '@/components/profile-avatar';
 import ThemeSwitch from '@/components/theme-switch';
+import CreateQuestion from '@/components/create-questions';
+import ProfileNavLink from '@/components/profile-nav-link';
+import LogoutNavLink from '@/components/logout-nav-link';
 
 // Sidebar links
 const sidebarLinks = [
@@ -45,8 +48,8 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
     <AppShell
       header={{ height: 70 }}
       navbar={{
-        width: 250,
-        breakpoint: 'sm',
+        width: 270,
+        breakpoint: 'md',
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
       padding='md'
@@ -62,13 +65,13 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
                 <Burger
                   opened={mobileOpened}
                   onClick={toggleMobile}
-                  hiddenFrom='sm'
+                  hiddenFrom='md'
                   size='sm'
                 />
                 <Burger
                   opened={desktopOpened}
                   onClick={toggleDesktop}
-                  visibleFrom='sm'
+                  visibleFrom='md'
                   size='sm'
                 />
                 <h3 className='text-primary text-3xl font-bold'>Digicon</h3>
@@ -76,7 +79,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
             <div className='flex gap-4'>
               <ThemeSwitch />
-              <ProfileAvatar />
+              <CreateQuestion />
             </div>
           </div>
         </Group>
@@ -85,7 +88,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         p='md'
         withBorder={false}
       >
-        <div className='h-full flex flex-col justify-between'>
+        <div className='h-screen flex flex-col justify-between'>
           <div>
             {sidebarLinks.map((link) => (
               <NavLink
@@ -97,7 +100,10 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
               />
             ))}
           </div>
-          <div></div>
+          <div>
+            <ProfileNavLink />
+            {/* <LogoutNavLink /> */}
+          </div>
         </div>
       </AppShell.Navbar>
       <AppShell.Main>

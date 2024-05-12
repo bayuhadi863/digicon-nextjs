@@ -15,24 +15,24 @@ const ThemeSwitch = () => {
       <ActionIcon
         variant='default'
         aria-label='Theme'
-        size='40'
+        size='42'
         color='gray'
         radius='xl'
         onClick={() => setColorScheme('light')}
         lightHidden
       >
-        <MdOutlineWbSunny size="1.2rem" />
+        <MdOutlineWbSunny size='1.2rem' />
       </ActionIcon>
       <ActionIcon
         variant='default'
         aria-label='Theme'
         onClick={() => setColorScheme('dark')}
-        size='40'
+        size='42'
         radius='xl'
         color='#000000'
         darkHidden
       >
-        <FiMoon size="1.2rem" />
+        <FiMoon size='1.2rem' />
       </ActionIcon>
     </>
   );
