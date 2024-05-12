@@ -20,12 +20,19 @@ const RegisterPage = () => {
     validateInputOnChange: true,
     initialValues: {
       name: '',
+      username: '',
       email: '',
       password: '',
       confirmPassword: '',
     },
     validate: {
       name: (value) => (value === '' ? 'Name is required' : value.length < 2 ? 'Too short name' : null),
+      username: (value) => {
+        if (value === '') return 'Username is required';
+        if (value.length < 2) return 'Too short username';
+        if (!/^[\w-]+$/.test(value)) return 'Username can only contain letters, numbers, hyphens (-), and underscores (_)';
+        return null;
+      },
       email: (value) => (value === '' ? 'Email is required' : /^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       password: (value) => (value === '' ? 'Password is required' : value.length < 6 ? 'Password is too short' : null),
       confirmPassword: (value, values) => (value === '' ? 'Password is required' : value !== values.password ? 'Passwords did not match' : null),
@@ -39,6 +46,8 @@ const RegisterPage = () => {
   const handleForm = async () => {
     const email = form.getValues().email;
     const password = form.getValues().password;
+    const name = form.getValues().name;
+    const username = form.getValues().username;
 
     setIsLoading(true);
 
@@ -59,24 +68,44 @@ const RegisterPage = () => {
         message: error.message,
         color: 'red',
       });
+
       return;
-      // return console.dir(error);
     }
 
-    // else successful
-    console.log(data);
-    setIsLoading(false);
+    const { data: profileData, error: profileError } = await supabase.from('profiles').insert([
+      {
+        name: name,
+        username: username,
+        email: email,
+      },
+    ]);
+
+    if (profileError) {
+      setIsLoading(false);
+      notifications.show({
+        title: 'Registrasion Failed!',
+        message: profileError.message,
+        color: 'red',
+      });
+
+      return;
+    }
+
+    console.log(data, profileData);
+
+    router.refresh();
+
     notifications.show({
       title: 'Registrasion Success!',
       message: 'You have successfully registered!',
       color: 'green',
     });
 
-    return router.push('/');
+    setIsLoading(false);
   };
 
   return (
-    <div className='flex justify-center items-center min-h-screen my-8 mx-4'>
+    <div className='flex justify-center items-center min-h-screen my-2 lg:my-8 mx-4'>
       <div className='w-96'>
         <Title ta='center'>Welcome to Digicon!</Title>
         <Text
@@ -114,6 +143,13 @@ const RegisterPage = () => {
                 placeholder='Your Name'
                 key={form.key('name')}
                 {...form.getInputProps('name')}
+              />
+              <TextInput
+                label='Username'
+                mt='md'
+                placeholder='Your Username'
+                key={form.key('username')}
+                {...form.getInputProps('username')}
               />
               <TextInput
                 label='Email'

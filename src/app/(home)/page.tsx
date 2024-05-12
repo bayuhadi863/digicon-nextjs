@@ -1,18 +1,28 @@
 'use client';
 
 import React from 'react';
-import { useMantineColorScheme, Button, Group } from '@mantine/core';
+// mantine import
+import { Button, Group } from '@mantine/core';
+// next js import
+import Image from 'next/image';
+// components import
+import SearchInput from '@/components/home/search-input';
 
 const HomePage = () => {
-  const { setColorScheme } = useMantineColorScheme();
-
   return (
-    <div className='h-[1000px]'>
-      <p>HomePage</p>
-      <Group>
-        <Button onClick={() => setColorScheme('light')}>Light</Button>
-        <Button onClick={() => setColorScheme('dark')}>Dark</Button>
-      </Group>
+    <div className='min-h-screen grid grid-cols-3 gap-16'>
+      <div className='col-span-2'>
+        <div className='flex justify-between items-center'>
+          <SearchInput />
+          <Button
+            size='md'
+            radius='md'
+          >
+            Question
+          </Button>
+        </div>
+      </div>
+      <div>Kanan</div>
     </div>
   );
 };

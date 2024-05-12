@@ -32,13 +32,13 @@ const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleForm = async () => {
+  const handleForm = async (e: any) => {
+    e.preventDefault();
+
     const email = form.getValues().email;
     const password = form.getValues().password;
 
     setIsLoading(true);
-
-    // const { result, error } = await signIn(email, password);
 
     const supabase = createClient();
 
@@ -55,10 +55,9 @@ const LoginPage = () => {
         color: 'red',
       });
       return;
-      // return console.dir(error);
     }
-    setIsLoading(false);
-    // console.log('Sign In Success:', data);
+
+    router.refresh();
 
     notifications.show({
       title: 'Login Success!',
@@ -66,11 +65,11 @@ const LoginPage = () => {
       color: 'green',
     });
 
-    return router.push('/');
+    setIsLoading(false);
   };
 
   return (
-    <div className='flex justify-center items-center min-h-screen my-8 lg:my-0 mx-4'>
+    <div className='flex justify-center items-center min-h-screen my-2 lg:my-0 mx-4'>
       <div className='w-96'>
         <Title ta='center'>Welcome back!</Title>
         <Text
@@ -102,7 +101,11 @@ const LoginPage = () => {
             mt={30}
             radius='md'
           >
-            <form onSubmit={form.onSubmit(handleForm)}>
+            <form
+              onSubmit={form.onSubmit((values, event) => {
+                handleForm(event);
+              })}
+            >
               <TextInput
                 label='Email'
                 placeholder='you@gmail.com'

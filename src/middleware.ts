@@ -15,16 +15,12 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Jika pengguna telah login dan mengunjungi halaman /, arahkan ke rute dashboard
-  if (user && request.nextUrl.pathname === '/') {
-    return NextResponse.rewrite(new URL('/', request.url));
+  if (!user) {
+    if (request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/register') {
+      return NextResponse.rewrite(new URL('/login', request.url));
+    }
   }
 
-  if (!user && request.nextUrl.pathname === '/') {
-    return NextResponse.rewrite(new URL('/login', request.url));
-  }
-
-  // Jika pengguna belum login dan mengunjungi halaman dashboard, arahkan ke halaman login
   if (user && request.nextUrl.pathname === '/login') {
     return NextResponse.rewrite(new URL('/', request.url));
   }
