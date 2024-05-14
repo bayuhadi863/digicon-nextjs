@@ -8,12 +8,15 @@ import { notifications } from '@mantine/notifications';
 import { insertTopicFollower, checkIfTopicFollowed, getTopicFollowersCount } from '@/utils/supabase/topic';
 // next js import
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const TopicCard = ({ topic, userId }: { topic: any; userId: any }) => {
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
   const [followed, setFollowed] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
+
+  const router = useRouter();
 
   useEffect(() => {
     const checkIfFollowed = async () => {
@@ -60,6 +63,11 @@ const TopicCard = ({ topic, userId }: { topic: any; userId: any }) => {
         message: 'You are now following this topic',
         color: 'green',
       });
+
+      // window.location.reload();
+
+      // refresh page
+      router.push('/topics');
     } catch (error) {
       console.error(error);
 
@@ -75,28 +83,23 @@ const TopicCard = ({ topic, userId }: { topic: any; userId: any }) => {
 
   return (
     <Card
-      radius='md'
       withBorder
+      component={Link}
+      href={`/topics/${topic.id}`}
     >
       <div>
-        <Link href={`/topics/${topic.id}`}>{topic.name}</Link>
+        <h3 className='font-semibold'>{topic.name}</h3>
       </div>
       <div className='flex justify-between items-center mt-2'>
         <div className='flex gap-2'>
-          <Text
-            size='xs'
-            c='dimmed'
-          >
-            {followersCount} Followers
-          </Text>
-          <Text
-            size='xs'
-            c='dimmed'
-          >
-            200 Forums
-          </Text>
+          <p className='text-xs'>
+            <span className='font-semibold'>{followersCount}</span> Followers
+          </p>
+          <p className='text-xs'>
+            <span className='font-semibold'>200</span> Forums
+          </p>
         </div>
-        <div>
+        {/* <div>
           {fetchLoading ? (
             <p>Loading...</p>
           ) : followed ? (
@@ -119,7 +122,7 @@ const TopicCard = ({ topic, userId }: { topic: any; userId: any }) => {
               Follow
             </Button>
           )}
-        </div>
+        </div> */}
       </div>
     </Card>
   );

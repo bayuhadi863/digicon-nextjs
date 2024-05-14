@@ -17,12 +17,7 @@ const TopicPage = () => {
       <div className='flex justify-between items-center mb-6'>
         {/* <p>{currentUser.id}</p> */}
         <PageTitle>Topics</PageTitle>
-        <Button
-          size='md'
-          radius='md'
-        >
-          Request Topic
-        </Button>
+        <Button size='md'>Request Topic</Button>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-6'>
         <PopularTopics />

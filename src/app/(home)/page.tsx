@@ -16,7 +16,7 @@ const HomePage = () => {
           <SearchInput />
           <Button
             size='md'
-            radius='md'
+            
           >
             Question
           </Button>

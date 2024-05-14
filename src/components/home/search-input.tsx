@@ -13,7 +13,6 @@ const SearchInput = () => {
         placeholder='Search'
         leftSection={<IoSearch />}
         size='md'
-        radius='md'
       />
     </form>
   );

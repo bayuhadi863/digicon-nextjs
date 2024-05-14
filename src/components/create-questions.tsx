@@ -18,13 +18,15 @@ const CreateQuestion = () => {
         opened={opened}
         onClose={close}
         title='Authentication'
+        size='xl'
+        centered
+        radius='md'
       >
         <CreateQuestionForm />
       </Modal>
 
       <Button
         size='md'
-        radius='md'
         onClick={open}
         leftSection={<IoMdAddCircleOutline size='1.1rem' />}
         className='hidden md:block'

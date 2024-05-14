@@ -96,11 +96,30 @@ export const fetchTopicById = async (topicId: string) => {
 export const fetchMostFollowedTopics = async () => {
   const supabase = createClient();
 
-  const { data: topics, error } = await supabase.from('topic_followers_count').select('*').order('follower_count').range(0, 2);
+  const { data: topics, error } = await supabase.from('topic_followers_count').select('*').order('follower_count', { ascending: false }).range(0, 2);
 
   if (error) {
     throw new Error(error.message);
   }
+
+  return topics;
+};
+
+// fetch all topics for select data
+export const fetchTopicsForSelect = async () => {
+  const supabase = createClient();
+
+  const { data: topics, error } = await supabase.from('topics').select('*');
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  // format data for select component (value, label)
+  topics.forEach((topic: any) => {
+    topic.value = topic.id;
+    topic.label = topic.name;
+  });
 
   return topics;
 };
