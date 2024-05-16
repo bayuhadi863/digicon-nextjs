@@ -102,7 +102,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
           <div>
             <ProfileNavLink />
-            {/* <LogoutNavLink /> */}
+            <LogoutNavLink />
           </div>
         </div>
       </AppShell.Navbar>

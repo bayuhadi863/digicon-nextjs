@@ -99,7 +99,7 @@ const LoginPage = () => {
             shadow='md'
             p={30}
             mt={30}
-            radius='md'
+            radius='lg'
           >
             <form
               onSubmit={form.onSubmit((values, event) => {
@@ -111,11 +111,13 @@ const LoginPage = () => {
                 placeholder='you@gmail.com'
                 key={form.key('email')}
                 {...form.getInputProps('email')}
+                radius="md"
               />
               <PasswordInput
                 label='Password'
                 placeholder='Your password'
                 mt='md'
+                radius="md"
                 key={form.key('password')}
                 {...form.getInputProps('password')}
               />
@@ -135,6 +137,7 @@ const LoginPage = () => {
                 fullWidth
                 mt='xl'
                 type='submit'
+                radius="md"
               >
                 Sign in
               </Button>

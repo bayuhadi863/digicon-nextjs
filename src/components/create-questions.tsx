@@ -22,11 +22,12 @@ const CreateQuestion = () => {
         centered
         radius='md'
       >
-        <CreateQuestionForm />
+        <CreateQuestionForm close={close} />
       </Modal>
 
       <Button
         size='md'
+        radius='md'
         onClick={open}
         leftSection={<IoMdAddCircleOutline size='1.1rem' />}
         className='hidden md:block'

@@ -5,11 +5,17 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from '@mantine/core';
 // component import
 import ProfileAvatar from './profile-avatar';
+// import { getCurrentUser } from '@/utils/supabase/auth/fetch';
 // utils import
 import { getCurrentUser } from '@/utils/supabase/auth';
 import { fetchProfileByUserId } from '@/utils/supabase/profile';
+// import { getCurrentUser } from '@/utils/supabase/auth/fetch';
+// import { fetchProfileByUserId } from '@/utils/supabase/profile/fetch';
 
 const ProfileNavLink = () => {
+  // const currentUser = await getCurrentUser();
+  // const profile = await fetchProfileByUserId(currentUser!.id);
+
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [profile, setProfile] = useState<any>(null);
   const [fetchLoading, setFetchLoading] = useState(false);
@@ -37,6 +43,7 @@ const ProfileNavLink = () => {
   }, [currentUser, currentUser?.id]);
 
   return (
+    // <div>Profile Nav Link</div>
     <NavLink
       label={profile?.name}
       component='button'

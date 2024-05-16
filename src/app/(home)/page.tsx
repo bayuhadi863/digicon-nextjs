@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 // mantine import
 import { Button, Group } from '@mantine/core';
@@ -7,6 +5,7 @@ import { Button, Group } from '@mantine/core';
 import Image from 'next/image';
 // components import
 import SearchInput from '@/components/home/search-input';
+import QuestionsList from '@/components/home/questions-list';
 
 const HomePage = () => {
   return (
@@ -16,10 +15,14 @@ const HomePage = () => {
           <SearchInput />
           <Button
             size='md'
-            
+            radius='md'
           >
             Question
           </Button>
+        </div>
+        <div className='mt-6'>
+          <h1 className='font-semibold text-2xl mb-4'>Questions</h1>
+          <QuestionsList />
         </div>
       </div>
       <div>Kanan</div>

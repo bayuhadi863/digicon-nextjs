@@ -135,18 +135,20 @@ const RegisterPage = () => {
             shadow='md'
             p={30}
             mt={30}
-            radius='md'
+            radius='lg'
           >
             <form onSubmit={form.onSubmit(handleForm)}>
               <TextInput
                 label='Name'
                 placeholder='Your Name'
+                radius='md'
                 key={form.key('name')}
                 {...form.getInputProps('name')}
               />
               <TextInput
                 label='Username'
                 mt='md'
+                radius='md'
                 placeholder='Your Username'
                 key={form.key('username')}
                 {...form.getInputProps('username')}
@@ -155,6 +157,7 @@ const RegisterPage = () => {
                 label='Email'
                 placeholder='you@gmail.com'
                 mt='md'
+                radius='md'
                 key={form.key('email')}
                 {...form.getInputProps('email')}
               />
@@ -162,6 +165,7 @@ const RegisterPage = () => {
                 label='Password'
                 placeholder='Your password'
                 mt='md'
+                radius='md'
                 key={form.key('password')}
                 {...form.getInputProps('password')}
               />
@@ -169,12 +173,14 @@ const RegisterPage = () => {
                 label='Confirm Password'
                 placeholder='Your confirm password'
                 mt='md'
+                radius='md'
                 key={form.key('confirmPassword')}
                 {...form.getInputProps('confirmPassword')}
               />
               <Button
                 fullWidth
                 mt='xl'
+                radius='md'
                 type='submit'
               >
                 Sign up
