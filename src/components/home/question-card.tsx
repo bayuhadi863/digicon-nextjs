@@ -1,12 +1,19 @@
 import React from 'react';
 // mantine import
-import { Card, Badge } from '@mantine/core';
+import { Card, Badge, Text } from '@mantine/core';
 // next js import
 import Link from 'next/link';
+// utils import
+import { format } from 'date-fns';
 
 const QuestionCard = ({ question }: { question: any }) => {
   const getCleanContent = (content: string) => {
     return content.replace(/<\/?pre>/g, '');
+  };
+
+  const formatDate = (date: string) => {
+    const d = new Date(date);
+    return format(d, 'MMMM dd, yyyy');
   };
 
   return (
@@ -15,13 +22,22 @@ const QuestionCard = ({ question }: { question: any }) => {
       withBorder
       className='mb-4'
     >
-      <Badge
-        color='blue'
-        size='lg'
-        radius='md'
-      >
-        {question.topic_name}
-      </Badge>
+      <div className='flex justify-between items-center text-inherit'>
+        <Badge
+          color='blue'
+          // size='lg'
+          radius='sm'
+          variant='outline'
+        >
+          {question.topic_name}
+        </Badge>
+        <Text
+          size='xs'
+          c='dimmed'
+        >
+          {formatDate(question.updated_at)}
+        </Text>
+      </div>
       <Link
         href={`/questions/${question.id}`}
         className='font-medium text-lg my-2'

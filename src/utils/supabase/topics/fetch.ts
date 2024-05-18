@@ -103,6 +103,30 @@ export const fetchMostFollowedTopics = async () => {
   return topics;
 };
 
+export const fetchTopicQuestionsCount = async () => {
+  const supabase = createClient();
+
+  const { data: topics, error } = await supabase.from('topic_questions_count').select('*').order('questions_count', { ascending: false }).range(0, 2);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return topics;
+};
+
+export const fetchTopicQuestionsCountById = async (topicId: string) => {
+  const supabase = createClient();
+
+  const { data: topic, error } = await supabase.from('topic_questions_count').select('*').eq('id', topicId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return topic[0];
+};
+
 // fetch all topics for select data
 export const fetchTopicsForSelect = async () => {
   const supabase = createClient();

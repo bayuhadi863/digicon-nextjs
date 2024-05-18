@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 // compoenent import
-import PageTitle from '@/components/page-title';
 import TopicDetailCard from '@/components/topics/topic-detail-card';
+import TopicQuestionSearch from '@/components/topics/topic-questions-search';
+import TopicQuestionsList from '@/components/topics/topic-questions-list';
 // mantine import
-import { Button } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+
 // utils
 
 const TopicDetailPage = ({ params }: { params: { id: string } }) => {
@@ -14,6 +14,13 @@ const TopicDetailPage = ({ params }: { params: { id: string } }) => {
         <Suspense fallback={<p>Loading topic detail ...</p>}>
           <TopicDetailCard topicId={params.id} />
         </Suspense>
+        <div className='mt-8'>
+          <h1 className='font-semibold text-2xl mb-4'>Questions</h1>
+          <TopicQuestionSearch />
+          <div className='mt-6'>
+            <TopicQuestionsList topicId={params.id} />
+          </div>
+        </div>
       </div>
       <div>Kanan</div>
     </div>

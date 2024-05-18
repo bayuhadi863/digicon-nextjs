@@ -54,3 +54,61 @@ export const insertQuestionData = async (topicId: string, title: string, content
   revalidatePath('/(home)');
   redirect('/');
 };
+
+export const updateQuestion = async (questionData: any, questionId: string) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from('questions').update(questionData).eq('id', questionId).select();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+export const updateQuestionImages = async (imageUrl: string, questionId: string) => {
+  const supabase = createClient();
+
+  try {
+    await supabase.from('question_images').update({ image_url: imageUrl }).eq('question_id', questionId);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+// update question
+export const updateQuestionData = async (questionId: string, topicId: string, title: string, content: string, imageUrl: string | null) => {
+  try {
+    await updateQuestion(
+      {
+        topic_id: topicId,
+        content: content,
+        title: title,
+      },
+      questionId
+    );
+
+    if (imageUrl) {
+      await updateQuestionImages(imageUrl, questionId);
+    }
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/(home)/questions/[id]');
+};
+
+// delete question
+export const deleteQuestion = async (questionId: string) => {
+  const supabase = createClient();
+
+  try {
+    await supabase.from('questions').delete().eq('id', questionId);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/(home)');
+  redirect('/');
+};

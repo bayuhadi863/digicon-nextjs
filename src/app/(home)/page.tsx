@@ -13,12 +13,6 @@ const HomePage = () => {
       <div className='col-span-2'>
         <div className='flex justify-between items-center'>
           <SearchInput />
-          <Button
-            size='md'
-            radius='md'
-          >
-            Question
-          </Button>
         </div>
         <div className='mt-6'>
           <h1 className='font-semibold text-2xl mb-4'>Questions</h1>

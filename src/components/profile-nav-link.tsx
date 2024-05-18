@@ -11,6 +11,8 @@ import { getCurrentUser } from '@/utils/supabase/auth';
 import { fetchProfileByUserId } from '@/utils/supabase/profile';
 // import { getCurrentUser } from '@/utils/supabase/auth/fetch';
 // import { fetchProfileByUserId } from '@/utils/supabase/profile/fetch';
+// next js import
+import Link from 'next/link';
 
 const ProfileNavLink = () => {
   // const currentUser = await getCurrentUser();
@@ -46,7 +48,8 @@ const ProfileNavLink = () => {
     // <div>Profile Nav Link</div>
     <NavLink
       label={profile?.name}
-      component='button'
+      component={Link}
+      href='/profile'
       leftSection={<ProfileAvatar />}
     />
   );

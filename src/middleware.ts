@@ -17,16 +17,16 @@ export async function middleware(request: NextRequest) {
 
   if (!user) {
     if (request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/register') {
-      return NextResponse.rewrite(new URL('/login', request.url));
+      return NextResponse.redirect(new URL('/login', request.url));
     }
   }
 
   if (user && request.nextUrl.pathname === '/login') {
-    return NextResponse.rewrite(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   if (user && request.nextUrl.pathname === '/register') {
-    return NextResponse.rewrite(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 }
 

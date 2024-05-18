@@ -29,6 +29,8 @@
     "@tiptap/extension-placeholder": "^2.3.2",
     "@tiptap/react": "^2.3.2",
     "@tiptap/starter-kit": "^2.3.2",
+    "cloudinary": "^2.2.0",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.0.4",
     "firebase": "^10.11.1",
@@ -39,6 +41,7 @@
     "recharts": "^2.12.7"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

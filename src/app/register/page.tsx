@@ -13,6 +13,7 @@ import Link from 'next/link';
 
 // lib / utils import
 import { createClient } from '@/utils/supabase/client';
+import { register } from '@/utils/supabase/auth/actions';
 
 const RegisterPage = () => {
   const form = useForm({
@@ -44,64 +45,32 @@ const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleForm = async () => {
-    const email = form.getValues().email;
-    const password = form.getValues().password;
-    const name = form.getValues().name;
-    const username = form.getValues().username;
+    try {
+      const email = form.getValues().email;
+      const password = form.getValues().password;
+      const name = form.getValues().name;
+      const username = form.getValues().username;
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    const supabase = createClient();
+      await register(email, password, name, username);
 
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        emailRedirectTo: `${process.env.API_URL}`,
-      },
-    });
+      notifications.show({
+        title: 'Registrasion Success!',
+        message: 'You have successfully registered!',
+        color: 'green',
+      });
 
-    if (error) {
       setIsLoading(false);
+    } catch (error: any) {
       notifications.show({
         title: 'Registrasion Failed!',
         message: error.message,
         color: 'red',
       });
 
-      return;
-    }
-
-    const { data: profileData, error: profileError } = await supabase.from('profiles').insert([
-      {
-        name: name,
-        username: username,
-        email: email,
-      },
-    ]);
-
-    if (profileError) {
       setIsLoading(false);
-      notifications.show({
-        title: 'Registrasion Failed!',
-        message: profileError.message,
-        color: 'red',
-      });
-
-      return;
     }
-
-    console.log(data, profileData);
-
-    router.refresh();
-
-    notifications.show({
-      title: 'Registrasion Success!',
-      message: 'You have successfully registered!',
-      color: 'green',
-    });
-
-    setIsLoading(false);
   };
 
   return (

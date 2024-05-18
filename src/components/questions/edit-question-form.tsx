@@ -14,6 +14,8 @@ import { fetchTopicsForSelect } from '@/utils/supabase/topic';
 import { insertQuestion } from '@/utils/supabase/question';
 import { uploadImage } from '@/utils/cloudinary/upload';
 import { insertQuestionData } from '@/utils/supabase/questions/actions';
+import { updateQuestionData } from '@/utils/supabase/questions/actions';
+import { deleteImage } from '@/utils/cloudinary/delete';
 // css
 import classes from '@/styles/text-editor.module.css';
 // icons import
@@ -25,7 +27,7 @@ interface FormValues {
   image: any;
 }
 
-const CreateQuestionForm = ({ close }: { close: any }) => {
+const EditQuestionForm = ({ close, question }: { close: any; question: any }) => {
   const [topicsData, setTopicsData] = useState<any>([]);
   const [fetchLoading, setFetchLoading] = useState(false);
 
@@ -42,15 +44,15 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
     });
   }, []);
 
-  const [content, setContent] = useState('' as string);
+  const [content, setContent] = useState(question.content as string);
   const [contentError, setContentError] = useState('' as string);
-  const [insertLoading, setInsertLoading] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
 
   const form = useForm<FormValues>({
     mode: 'uncontrolled',
     initialValues: {
-      title: '',
-      topic: '',
+      title: question.title,
+      topic: question.topic_id,
       image: null,
     },
 
@@ -81,7 +83,7 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
 
     try {
       // insert loading
-      setInsertLoading(true);
+      setEditLoading(true);
 
       const title = form.getValues().title;
       const topic = form.getValues().topic;
@@ -91,11 +93,9 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
 
       if (!questionContentText) {
         setContentError('Question content is required');
-        setInsertLoading(false);
+        setEditLoading(false);
         return;
       }
-
-      setContentError('');
 
       // upload image
       if (image) {
@@ -103,10 +103,12 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
         formData.append('file', image);
         formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET_NAME!);
 
+        await deleteImage(question.image_url);
+
         const imageData = await uploadImage(formData);
-        await insertQuestionData(topic, title, questionContent!, imageData.secure_url);
+        await updateQuestionData(question.id, topic, title, questionContent!, imageData.secure_url);
       } else {
-        await insertQuestionData(topic, title, questionContent!, null);
+        await updateQuestionData(question.id, topic, title, questionContent!, null);
       }
 
       // close modal
@@ -114,29 +116,29 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
 
       // show notification
       notifications.show({
-        title: 'Question created successfully',
-        message: 'Your question has been created successfully',
+        title: 'Question updated successfully',
+        message: 'Your question has been updated successfully',
         color: 'green',
       });
 
-      setInsertLoading(false);
+      setEditLoading(false);
     } catch (error: any) {
       notifications.show({
         title: 'Error',
-        message: 'An error occurred while creating question. Please try again.',
+        message: 'An error occurred while updating your question. Please try again',
         color: 'red',
       });
 
       console.error(error);
 
-      setInsertLoading(false);
+      setEditLoading(false);
     }
   };
 
   return (
     <Box pos='relative'>
       <LoadingOverlay
-        visible={insertLoading}
+        visible={editLoading}
         zIndex={1000}
         overlayProps={{ radius: 'sm', blur: 2 }}
       />
@@ -169,7 +171,7 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
 
         <FileInput
           label='Image (optional)'
-          placeholder='Choose image'
+          placeholder='Edit or add new image'
           accept='image/png,image/jpeg,image/jpg'
           clearable
           leftSection={<FaRegFileImage />}
@@ -228,7 +230,7 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
           type='submit'
           className='mt-4'
           radius='md'
-          // loading={insertLoading}
+          // loading={editLoading}
         >
           Submit
         </Button>
@@ -237,4 +239,4 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
   );
 };
 
-export default CreateQuestionForm;
+export default EditQuestionForm;

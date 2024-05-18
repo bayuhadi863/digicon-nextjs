@@ -7,29 +7,33 @@ import { notifications } from '@mantine/notifications';
 // icons import
 import { IoLogOutOutline } from 'react-icons/io5';
 // utils import
-import { logoutUser } from '@/utils/supabase/auth';
+import { logoutUser } from '@/utils/supabase/auth/actions';
 // next js import
-import { useRouter } from 'next/navigation';
 
 const LogoutNavLink = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
 
-  const router = useRouter();
-
   const handleLogout = async () => {
-    setLogoutLoading(true);
+    try {
+      setLogoutLoading(true);
 
-    await logoutUser();
+      await logoutUser();
 
-    router.refresh();
+      notifications.show({
+        title: 'Logout Success!',
+        message: 'You have been logged out successfully!',
+        color: 'green',
+      });
 
-    notifications.show({
-      title: 'Logout Success!',
-      message: 'You have been logged out successfully!',
-      color: 'green',
-    });
-
-    setLogoutLoading(false);
+      setLogoutLoading(false);
+    } catch (error: any) {
+      notifications.show({
+        title: 'Logout Error!',
+        message: error.message,
+        color: 'red',
+      });
+      setLogoutLoading(false);
+    }
   };
   return (
     <NavLink

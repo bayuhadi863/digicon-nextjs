@@ -5,7 +5,7 @@ import PageTitle from '@/components/page-title';
 import FollowersCount from './followers-count';
 import FollowButton from './follow-button';
 // utils import
-import { fetchTopicById, getTopicFollowersCount, getRealtimeTopicFollowers, checkIfTopicFollowed } from '@/utils/supabase/topics/fetch';
+import { fetchTopicById, getTopicFollowersCount, checkIfTopicFollowed, fetchTopicQuestionsCountById } from '@/utils/supabase/topics/fetch';
 import { getCurrentUser } from '@/utils/supabase/auth/fetch';
 
 const TopicDetailCard = async ({ topicId }: { topicId: string }) => {
@@ -15,10 +15,7 @@ const TopicDetailCard = async ({ topicId }: { topicId: string }) => {
   const followersCount = topicFollowers.length;
   const followersByUser = await checkIfTopicFollowed(topicId, currentUser!.id);
   const followed = followersByUser.length > 0;
-
-  const realtimeTopicFollowers = await getRealtimeTopicFollowers();
-
-  // console.log(realtimeTopicFollowers.topic);
+  const topicWithQuestionsCount = await fetchTopicQuestionsCountById(topicId);
 
   return (
     <div>
@@ -35,7 +32,7 @@ const TopicDetailCard = async ({ topicId }: { topicId: string }) => {
           <span className='font-semibold'>{followersCount}</span> followers
         </p>
         <p>
-          <span className='font-semibold'>200</span> questions
+          <span className='font-semibold'>{topicWithQuestionsCount.questions_count}</span> questions
         </p>
       </div>
     </div>

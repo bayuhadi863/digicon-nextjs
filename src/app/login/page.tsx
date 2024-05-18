@@ -9,10 +9,9 @@ import { notifications } from '@mantine/notifications';
 
 // Next js import
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 // lib / utils import
-import { createClient } from '@/utils/supabase/client';
+import { login } from '@/utils/supabase/auth/actions';
 
 const LoginPage = () => {
   const form = useForm({
@@ -28,44 +27,35 @@ const LoginPage = () => {
     },
   });
 
-  const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(false);
 
   const handleForm = async (e: any) => {
     e.preventDefault();
 
-    const email = form.getValues().email;
-    const password = form.getValues().password;
+    try {
+      const email = form.getValues().email;
+      const password = form.getValues().password;
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    const supabase = createClient();
+      await login(email, password);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+      notifications.show({
+        title: 'Login Success!',
+        message: 'Welcome to Digicon!',
+        color: 'green',
+      });
 
-    if (error) {
       setIsLoading(false);
+    } catch (error: any) {
       notifications.show({
         title: 'Login Failed!',
         message: error.message,
         color: 'red',
       });
-      return;
+
+      setIsLoading(false);
     }
-
-    router.refresh();
-
-    notifications.show({
-      title: 'Login Success!',
-      message: 'Welcome to Digicon!',
-      color: 'green',
-    });
-
-    setIsLoading(false);
   };
 
   return (
@@ -111,13 +101,13 @@ const LoginPage = () => {
                 placeholder='you@gmail.com'
                 key={form.key('email')}
                 {...form.getInputProps('email')}
-                radius="md"
+                radius='md'
               />
               <PasswordInput
                 label='Password'
                 placeholder='Your password'
                 mt='md'
-                radius="md"
+                radius='md'
                 key={form.key('password')}
                 {...form.getInputProps('password')}
               />
@@ -137,7 +127,7 @@ const LoginPage = () => {
                 fullWidth
                 mt='xl'
                 type='submit'
-                radius="md"
+                radius='md'
               >
                 Sign in
               </Button>

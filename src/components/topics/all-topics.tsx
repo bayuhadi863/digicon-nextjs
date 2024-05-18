@@ -3,11 +3,9 @@ import React from 'react';
 import CategoryTitle from './category-title';
 import TopicCard from './topic-card';
 // utils import
-import { getCurrentUser } from '@/utils/supabase/auth/fetch';
 import { fetchTopics } from '@/utils/supabase/topics/fetch';
 
 const AllTopics = async () => {
-  const currentUser = await getCurrentUser();
   const topics = await fetchTopics();
 
   return (
@@ -20,7 +18,6 @@ const AllTopics = async () => {
               <TopicCard
                 key={topic.id}
                 topic={topic}
-                userId={currentUser ? currentUser.id : null}
               />
             ))}
           </div>
