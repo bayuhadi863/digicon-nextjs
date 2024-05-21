@@ -14,3 +14,16 @@ export const insertAnswer = async (answerData: any) => {
 
   revalidatePath('/(home)/questions/[id]');
 };
+
+// delete answer
+export const deleteAnswer = async (answerId: string) => {
+  const supabase = createClient();
+
+  try {
+    await supabase.from('answers').delete().eq('id', answerId);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/(home)/questions/[id]');
+};

@@ -103,7 +103,9 @@ const EditQuestionForm = ({ close, question }: { close: any; question: any }) =>
         formData.append('file', image);
         formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET_NAME!);
 
-        await deleteImage(question.image_url);
+        if (question.image_url) {
+          await deleteImage(question.image_url);
+        }
 
         const imageData = await uploadImage(formData);
         await updateQuestionData(question.id, topic, title, questionContent!, imageData.secure_url);

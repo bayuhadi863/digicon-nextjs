@@ -15,6 +15,7 @@ import { GoHome } from 'react-icons/go';
 import { MdOutlineTopic } from 'react-icons/md';
 // next js import
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 // component import
 import ProfileCard from '@/components/home/profile-card';
@@ -24,25 +25,34 @@ import ProfileAvatar from '@/components/profile-avatar';
 import ThemeSwitch from '@/components/theme-switch';
 import CreateQuestion from '@/components/create-questions';
 import ProfileNavLink from '@/components/profile-nav-link';
-import LogoutNavLink from '@/components/logout-nav-link';
-
-// Sidebar links
-const sidebarLinks = [
-  {
-    name: 'Home',
-    href: '/',
-    icon: <GoHome />,
-  },
-  {
-    name: 'Topics',
-    href: '/topics',
-    icon: <MdOutlineTopic />,
-  },
-];
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLinkClick = (route: string) => {
+    router.push(route);
+    toggleMobile();
+  };
+
+  // Sidebar links
+  const sidebarLinks = [
+    {
+      name: 'Home',
+      href: '/',
+      icon: <GoHome />,
+      isActive: pathname === '/',
+    },
+    {
+      name: 'Topics',
+      href: '/topics',
+      icon: <MdOutlineTopic />,
+      isActive: pathname.startsWith('/topics'),
+    },
+  ];
 
   return (
     <AppShell
@@ -52,9 +62,9 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         breakpoint: 'md',
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
-      padding='md'
+      padding='lg'
     >
-      <AppShell.Header withBorder={false}>
+      <AppShell.Header withBorder={true}>
         <Group
           h='100%'
           px='md'
@@ -85,24 +95,42 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         </Group>
       </AppShell.Header>
       <AppShell.Navbar
-        p='md'
+        py='md'
         withBorder={false}
       >
         <div className='h-screen flex flex-col justify-between'>
           <div>
             {sidebarLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                label={link.name}
-                component={Link}
-                href={link.href}
-                leftSection={link.icon}
-              />
+              <>
+                <div className='block lg:hidden'>
+                  <NavLink
+                    key={link.name}
+                    label={link.name}
+                    component='button'
+                    // component={Link}
+                    // href={link.href}
+                    leftSection={link.icon}
+                    px='lg'
+                    active={pathname === link.href}
+                    onClick={() => handleLinkClick(link.href)}
+                  />
+                </div>
+                <div className='hidden lg:block'>
+                  <NavLink
+                    key={link.name}
+                    label={link.name}
+                    component={Link}
+                    href={link.href}
+                    leftSection={link.icon}
+                    px='lg'
+                    active={link.isActive}
+                  />
+                </div>
+              </>
             ))}
           </div>
           <div>
-            <ProfileNavLink />
-            <LogoutNavLink />
+            <ProfileNavLink toggleMobile={toggleMobile} />
           </div>
         </div>
       </AppShell.Navbar>

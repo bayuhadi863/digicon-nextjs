@@ -2,16 +2,15 @@
 
 import React, { useState } from 'react';
 // mantine import
-import { ActionIcon, Text, Button, Modal } from '@mantine/core';
+import { ActionIcon, Modal, Text, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 // icons import
 import { IoTrashOutline } from 'react-icons/io5';
 // utils import
-import { deleteQuestion } from '@/utils/supabase/questions/actions';
-import { deleteImage } from '@/utils/cloudinary/delete';
+import { deleteAnswer } from '@/utils/supabase/answers/actions';
 
-const DeleteQuestion = ({ question }: { question: any }) => {
+const DeleteAnswerButton = ({ answerId }: { answerId: string }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -19,17 +18,15 @@ const DeleteQuestion = ({ question }: { question: any }) => {
     try {
       setDeleteLoading(true);
 
-      await deleteImage(question.image_url);
-
-      await deleteQuestion(question.id);
+      await deleteAnswer(answerId);
 
       setDeleteLoading(false);
 
       close();
 
       notifications.show({
-        title: 'Question successfully deleted',
-        message: 'Your question has been successfully deleted.',
+        title: 'Answer successfully deleted',
+        message: 'Your answer has been successfully deleted.',
         color: 'green',
       });
     } catch (error) {
@@ -39,7 +36,7 @@ const DeleteQuestion = ({ question }: { question: any }) => {
 
       notifications.show({
         title: 'Error',
-        message: 'An error occurred while deleting your question.',
+        message: 'An error occurred while deleting your answer.',
         color: 'red',
       });
     }
@@ -50,11 +47,11 @@ const DeleteQuestion = ({ question }: { question: any }) => {
       <Modal
         opened={opened}
         onClose={close}
-        title='Delete Question'
+        title='Delete Answer'
         centered
         radius='md'
       >
-        <Text size='sm'>Are you sure you want to delete your question? Your question will be permanently deleted.</Text>
+        <Text size='sm'>Are you sure you want to delete your answer? Your answer will be permanently deleted.</Text>
         <div className='flex justify-end gap-3 mt-4'>
           <Button
             variant='default'
@@ -74,16 +71,11 @@ const DeleteQuestion = ({ question }: { question: any }) => {
           </Button>
         </div>
       </Modal>
-      <ActionIcon
-        variant='outline'
-        color='red'
-        aria-label='Delete'
-        onClick={open}
-      >
-        <IoTrashOutline />
-      </ActionIcon>
+      <button onClick={open}>
+        <IoTrashOutline className='text-red-300 hover:text-red-400' />
+      </button>
     </div>
   );
 };
 
-export default DeleteQuestion;
+export default DeleteAnswerButton;

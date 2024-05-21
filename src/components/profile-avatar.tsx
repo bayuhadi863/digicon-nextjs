@@ -16,10 +16,10 @@ const links = [
   },
 ];
 
-const ProfileAvatar = () => {
+const ProfileAvatar = ({ profile }: { profile: any }) => {
   return (
     <Avatar
-      src={UserImage.src}
+      src={profile?.profile_picture ? profile?.profile_picture : UserImage.src}
       alt={`User's photo`}
       size='35'
     />

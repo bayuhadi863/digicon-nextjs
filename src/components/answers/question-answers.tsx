@@ -6,12 +6,12 @@ import AnswerModal from './answer-modal';
 // mantine import
 import { Button } from '@mantine/core';
 
-const QuestionAnswers = ({ questionId }: { questionId: string }) => {
+const QuestionAnswers = ({ questionId, userQuestion }: { questionId: string; userQuestion: boolean }) => {
   return (
     <div>
       <div className='flex justify-between items-center'>
         <h1 className='text-xl font-semibold'>0 Answers</h1>
-        <AnswerModal questionId={questionId} />
+        {!userQuestion && <AnswerModal questionId={questionId} />}
       </div>
       <div className='mt-6'>
         <Suspense fallback={<p>Answers loading ...</p>}>

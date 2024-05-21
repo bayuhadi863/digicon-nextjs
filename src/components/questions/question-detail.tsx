@@ -61,7 +61,10 @@ const QuestionDetail = async ({ questionId }: { questionId: string }) => {
       )}
 
       <div className='mt-6 py-4 border-t border-gray-400'>
-        <QuestionAnswers questionId={questionId} />
+        <QuestionAnswers
+          questionId={questionId}
+          userQuestion={userQuestion}
+        />
       </div>
     </div>
   );

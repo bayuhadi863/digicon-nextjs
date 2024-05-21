@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+// component import
+import ProfileCard from '@/components/profile/profile-card';
 
 const ProfilePage = () => {
   return (
-    <div>ProfilePage Halo bang</div>
-  )
-}
+    <div className='min-h-screen'>
+      <ProfileCard />
+    </div>
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

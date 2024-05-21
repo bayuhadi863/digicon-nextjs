@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createClient } from '../server';
+import { checkIfTopicFollowed } from '../topics/fetch';
 
 export const insertQuestion = async (questionData: any) => {
   const supabase = createClient();
@@ -29,7 +30,12 @@ export const insertQuestionImages = async (data: any) => {
 
 // insert questions data
 export const insertQuestionData = async (topicId: string, title: string, content: string, imageUrl: string | null) => {
+  const supabase = createClient();
   try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     const question = await insertQuestion({
       topic_id: topicId,
       content: content,
@@ -47,6 +53,14 @@ export const insertQuestionData = async (topicId: string, title: string, content
         throw new Error('Failed to insert question');
       }
     }
+
+    const topicFollowers = await checkIfTopicFollowed(topicId, user!.id);
+
+    if (topicFollowers.length < 1) {
+      await supabase.from('topic_followers').insert({ topic_id: topicId });
+    }
+
+    
   } catch (error: any) {
     throw new Error(error.message);
   }
