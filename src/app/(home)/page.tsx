@@ -8,6 +8,7 @@ import QuestionsList from '@/components/home/questions-list';
 import PopularQuestions from '@/components/home/popular-questions';
 import PopularTopics from '@/components/topics/popular-topics';
 import QuestionListSkeleton from '@/components/questions/question-list-skeleton';
+import PopularSkeleton from '@/components/topics/popular-skeleton';
 
 const HomePage = ({ searchParams }: { searchParams: any }) => {
   return (
@@ -24,12 +25,12 @@ const HomePage = ({ searchParams }: { searchParams: any }) => {
       </div>
       <div>
         <div className='mb-4'>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<PopularSkeleton />}>
             <PopularQuestions />
           </Suspense>
         </div>
         <div>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<PopularSkeleton />}>
             <PopularTopics titleLarge={false} />
           </Suspense>
         </div>

@@ -5,7 +5,9 @@ import TopicQuestionSearch from '@/components/topics/topic-questions-search';
 import TopicQuestionsList from '@/components/topics/topic-questions-list';
 import PopularQuestions from '@/components/home/popular-questions';
 import PopularTopics from '@/components/topics/popular-topics';
-import { AnyARecord } from 'dns';
+import PopularSkeleton from '@/components/topics/popular-skeleton';
+import QuestionListSkeleton from '@/components/questions/question-list-skeleton';
+import TopicCardSkeleton from '@/components/topics/topic-card-skeleton';
 // mantine import
 
 // utils
@@ -14,13 +16,13 @@ const TopicDetailPage = ({ params, searchParams }: { params: { id: string }; sea
   return (
     <div className='min-h-screen grid grid-cols-1 lg:grid-cols-3 gap-12'>
       <div className='lg:col-span-2'>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<TopicCardSkeleton />}>
           <TopicDetailCard topicId={params.id} />
         </Suspense>
         <div className='mt-8'>
           <h1 className='font-semibold text-2xl mb-4'>Questions</h1>
           <div className='mt-6'>
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={<QuestionListSkeleton />}>
               <TopicQuestionsList
                 topicId={params.id}
                 page={searchParams.page}
@@ -31,12 +33,12 @@ const TopicDetailPage = ({ params, searchParams }: { params: { id: string }; sea
       </div>
       <div>
         <div className='mb-4'>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<PopularSkeleton />}>
             <PopularQuestions />
           </Suspense>
         </div>
         <div>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<PopularSkeleton />}>
             <PopularTopics titleLarge={false} />
           </Suspense>
         </div>

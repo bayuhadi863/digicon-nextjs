@@ -6,6 +6,8 @@ import PageTitle from '@/components/page-title';
 import PopularTopics from '@/components/topics/popular-topics';
 import MostFollowedTopics from '@/components/topics/most-followed-topics';
 import AllTopics from '@/components/topics/all-topics';
+import PopularSkeleton from '@/components/topics/popular-skeleton';
+import AllTopicsSkeleton from '@/components/topics/all-topics-skeleton';
 // utils import
 
 const TopicPage = ({ searchParams }: { searchParams: any }) => {
@@ -22,15 +24,15 @@ const TopicPage = ({ searchParams }: { searchParams: any }) => {
         </Button> */}
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-6'>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<PopularSkeleton />}>
           <PopularTopics titleLarge={true} />
         </Suspense>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<PopularSkeleton />}>
           <MostFollowedTopics />
         </Suspense>
       </div>
       <div>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<AllTopicsSkeleton />}>
           <AllTopics page={searchParams.page} />
         </Suspense>
       </div>
