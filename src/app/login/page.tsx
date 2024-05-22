@@ -83,6 +83,7 @@ const LoginPage = () => {
             visible={isLoading}
             zIndex={1000}
             overlayProps={{ radius: 'sm', blur: 2 }}
+            loaderProps={{ color: 'pink', type: 'bars' }}
           />
           <Paper
             withBorder
@@ -111,18 +112,7 @@ const LoginPage = () => {
                 key={form.key('password')}
                 {...form.getInputProps('password')}
               />
-              <Group
-                justify='space-between'
-                mt='lg'
-              >
-                <Checkbox label='Remember me' />
-                <Anchor
-                  component='button'
-                  size='sm'
-                >
-                  Forgot password?
-                </Anchor>
-              </Group>
+
               <Button
                 fullWidth
                 mt='xl'

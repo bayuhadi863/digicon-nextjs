@@ -98,6 +98,7 @@ const RegisterPage = () => {
             visible={isLoading}
             zIndex={1000}
             overlayProps={{ radius: 'sm', blur: 2 }}
+            loaderProps={{ color: 'pink', type: 'bars' }}
           />
           <Paper
             withBorder
