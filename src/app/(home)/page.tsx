@@ -7,6 +7,7 @@ import Image from 'next/image';
 import QuestionsList from '@/components/home/questions-list';
 import PopularQuestions from '@/components/home/popular-questions';
 import PopularTopics from '@/components/topics/popular-topics';
+import QuestionListSkeleton from '@/components/questions/question-list-skeleton';
 
 const HomePage = ({ searchParams }: { searchParams: any }) => {
   return (
@@ -16,7 +17,7 @@ const HomePage = ({ searchParams }: { searchParams: any }) => {
         <h2 className='text-xl font-medium'>Create and Find Many Discussion About Information Technology.</h2>
         <div className='mt-8'>
           <h1 className='font-semibold text-2xl mb-4'>Followed Topic Questions</h1>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<QuestionListSkeleton />}>
             <QuestionsList page={searchParams.page} />
           </Suspense>
         </div>

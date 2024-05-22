@@ -11,6 +11,10 @@ import Link from 'next/link';
 
 const QuestionsList = async ({ page }: { page: any }) => {
   const pageNumber = page ? parseInt(page) : 1;
+
+  // wait 5 seconds
+  // await new Promise((resolve) => setTimeout(resolve, 10000));
+
   const questions = await fetchFollowedTopicQuestions(pageNumber);
   const allQuestions = await fetchFollowedTopicQuestions();
 
