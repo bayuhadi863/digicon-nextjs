@@ -5,7 +5,9 @@ import { fetchFollowedTopicQuestions } from '@/utils/supabase/questions/fetch';
 import QuestionCard from './question-card';
 import MyPagination from './home-pagination';
 // mantine import
-import { Text } from '@mantine/core';
+import { Text, Button } from '@mantine/core';
+// next js import
+import Link from 'next/link';
 
 const QuestionsList = async ({ page }: { page: any }) => {
   const pageNumber = page ? parseInt(page) : 1;
@@ -31,12 +33,22 @@ const QuestionsList = async ({ page }: { page: any }) => {
           ))}
         </div>
       ) : (
-        <Text
-          size='sm'
-          c='dimmed'
-        >
-          No questions found
-        </Text>
+        <div>
+          <Text
+            size='sm'
+            c='dimmed'
+            className='mb-4'
+          >
+            No questions found
+          </Text>
+          <Button
+            radius='md'
+            component={Link}
+            href='/topics'
+          >
+            Follow New Topics
+          </Button>
+        </div>
       )}
 
       <div className='mt-6 flex justify-center'>

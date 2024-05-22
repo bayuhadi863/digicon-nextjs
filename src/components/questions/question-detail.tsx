@@ -29,6 +29,14 @@ const QuestionDetail = async ({ questionId }: { questionId: string }) => {
     return format(d, 'MMMM dd, yyyy');
   };
 
+  const getRandColor = (text: string) => {
+    const length = text.length;
+
+    const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'pink', 'orange', 'indigo', 'teal', 'cyan'];
+
+    return colors[length % colors.length];
+  };
+
   return (
     <div>
       <h1 className='text-2xl font-semibold mb-4'>{question.title}</h1>
@@ -36,6 +44,7 @@ const QuestionDetail = async ({ questionId }: { questionId: string }) => {
         <Badge
           radius='sm'
           variant='outline'
+          color={getRandColor(question.topic_name)}
         >
           {question.topic_name}
         </Badge>
