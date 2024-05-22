@@ -23,7 +23,7 @@ const ProfileCard = async () => {
           size={100}
         />
         <div className='text-center md:text-start '>
-          <Title className='mb-2 break-all whitespace-normal'>{profile.name}</Title>
+          <h3 className='text-2xl font-semibold lg:text-3xl mb-2 break-all whitespace-normal'>{profile.name}</h3>
           <Text>@{profile.username}</Text>
         </div>
       </div>
