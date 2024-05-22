@@ -5,12 +5,13 @@ import TopicCard from './topic-card';
 // utils import
 import { fetchTopicQuestionsCount } from '@/utils/supabase/topics/fetch';
 
-const PopularTopics = async () => {
+const PopularTopics = async ({ titleLarge }: { titleLarge: boolean }) => {
   const topics = await fetchTopicQuestionsCount();
 
   return (
     <div className='mt-2'>
-      <CategoryTitle>Most Followed Topics</CategoryTitle>
+      {titleLarge ? <CategoryTitle>Popular Topics</CategoryTitle> : <h4 className='font-semibold text-xl'>Popular Topics</h4>}
+
       <div className='mt-2'>
         {topics.length > 0 ? (
           <div className='grid grid-cols-1 gap-4'>

@@ -71,9 +71,15 @@ const DeleteAnswerButton = ({ answerId }: { answerId: string }) => {
           </Button>
         </div>
       </Modal>
-      <button onClick={open}>
-        <IoTrashOutline className='text-red-300 hover:text-red-400' />
-      </button>
+      <ActionIcon
+        variant='outline'
+        size='sm'
+        color='red'
+        aria-label='Settings'
+        onClick={open}
+      >
+        <IoTrashOutline size={14} />
+      </ActionIcon>
     </div>
   );
 };

@@ -16,18 +16,18 @@ const ProfileCard = async () => {
 
   return (
     <div className='flex flex-col md:flex-row gap-6 justify-between'>
-      <div className='flex items-center gap-6'>
+      <div className='flex flex-col md:flex-row items-center gap-6'>
         <Avatar
           src={profile.profile_picture ? profile.profile_picture : UserImage.src}
           alt='User'
           size={100}
         />
-        <div>
-          <Title className='mb-2'>{profile.name}</Title>
+        <div className='text-center md:text-start '>
+          <Title className='mb-2 break-all whitespace-normal'>{profile.name}</Title>
           <Text>@{profile.username}</Text>
         </div>
       </div>
-      <div className='flex gap-2'>
+      <div className='flex gap-2 justify-center'>
         <EditButton profile={profile} />
         <LogoutButton />
       </div>

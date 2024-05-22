@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 // utils import
 import { fetchQuestionById } from '@/utils/supabase/questions/fetch';
 import { getCurrentUser } from '@/utils/supabase/auth/fetch';
 import { fetchProfileByUserId } from '@/utils/supabase/profile/fetch';
+import { format } from 'date-fns';
 // component import
 import QuestionContent from './question-content';
 import EditQuestion from './edit-question';
@@ -12,7 +13,9 @@ import QuestionAnswers from '../answers/question-answers';
 import Image from 'next/image';
 import Link from 'next/link';
 // mantine import
-import { Badge } from '@mantine/core';
+import { Badge, Avatar, Text } from '@mantine/core';
+// image import
+import UserImage from '/public/assets/images/user.png';
 
 const QuestionDetail = async ({ questionId }: { questionId: string }) => {
   const currentUser = await getCurrentUser();
@@ -20,6 +23,11 @@ const QuestionDetail = async ({ questionId }: { questionId: string }) => {
   const profile = await fetchProfileByUserId(question.user_id);
 
   const userQuestion = question.user_id === currentUser?.id;
+
+  const formatDate = (date: string) => {
+    const d = new Date(date);
+    return format(d, 'MMMM dd, yyyy');
+  };
 
   return (
     <div>
@@ -32,11 +40,24 @@ const QuestionDetail = async ({ questionId }: { questionId: string }) => {
           {question.topic_name}
         </Badge>
       </div>
-      <div className='mb-6'>
-        <p className='text-sm font-semibold'>{profile.name}</p>
+      <div className='mb-6 flex justify-between flex-wrap gap-4 items-center'>
+        <div className='flex items-center gap-2 '>
+          <Avatar
+            src={profile.profile_picture ? profile.profile_picture : UserImage.src}
+            alt='User'
+            size={26}
+          />
+          <p className='text-sm font-semibold break-all whitespace-normal line-clamp-1'>{profile.name}</p>
+        </div>
+        <Text
+          size='xs'
+          c='dimmed'
+        >
+          {formatDate(question.updated_at)}
+        </Text>
       </div>
       {question.image_url && (
-        <div className='mb-6'>
+        <div className='mb-6 '>
           <Link
             href={question.image_url}
             target='_blank'
@@ -46,6 +67,7 @@ const QuestionDetail = async ({ questionId }: { questionId: string }) => {
               alt='image'
               width={500}
               height={500}
+              className='w-full'
             />
           </Link>
         </div>
@@ -60,11 +82,14 @@ const QuestionDetail = async ({ questionId }: { questionId: string }) => {
         </div>
       )}
 
-      <div className='mt-6 py-4 border-t border-gray-400'>
-        <QuestionAnswers
-          questionId={questionId}
-          userQuestion={userQuestion}
-        />
+      <div className='mt-6 pt-4 border-t border-gray-400'>
+        <Suspense fallback={<p>Answers loading ...</p>}>
+          <QuestionAnswers
+            questionId={questionId}
+            userQuestion={userQuestion}
+            userId={currentUser!.id}
+          />
+        </Suspense>
       </div>
     </div>
   );

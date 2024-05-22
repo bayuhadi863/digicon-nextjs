@@ -10,7 +10,7 @@ import { AppShell, Burger, Group, Text, NavLink } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 // icons import
-
+import { RiQuestionnaireLine } from 'react-icons/ri';
 import { GoHome } from 'react-icons/go';
 import { MdOutlineTopic } from 'react-icons/md';
 // next js import
@@ -51,6 +51,12 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
       href: '/topics',
       icon: <MdOutlineTopic />,
       isActive: pathname.startsWith('/topics'),
+    },
+    {
+      name: 'Questions',
+      href: '/questions',
+      icon: <RiQuestionnaireLine />,
+      isActive: pathname.startsWith('/questions'),
     },
   ];
 

@@ -9,12 +9,12 @@ import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import { notifications } from '@mantine/notifications';
 // utils import
-import { insertAnswer } from '@/utils/supabase/answers/actions';
+import { updateAnswer } from '@/utils/supabase/answers/actions';
 
-const AnswerForm = ({ questionId, close }: { questionId: string; close: any }) => {
-  const [content, setContent] = useState('' as string);
+const EditAnswerForm = ({ answer, close }: { answer: any; close: any }) => {
+  const [content, setContent] = useState(answer.content as string);
   const [contentError, setContentError] = useState('' as string);
-  const [insertLoading, setInsertLoading] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
 
   const editor = useEditor({
     extensions: [StarterKit, Link, Placeholder.configure({ placeholder: 'Enter your answer here' })],
@@ -31,20 +31,17 @@ const AnswerForm = ({ questionId, close }: { questionId: string; close: any }) =
 
       if (!answerContentText) {
         setContentError('Answer content is required');
-        setInsertLoading(false);
+        setEditLoading(false);
         return;
       }
 
       setContentError('');
 
-      setInsertLoading(true);
+      setEditLoading(true);
 
-      await insertAnswer({
-        question_id: questionId,
-        content: answerContent,
-      });
+      await updateAnswer(answer.id, { content: answerContent });
 
-      setInsertLoading(false);
+      setEditLoading(false);
 
       close();
 
@@ -62,14 +59,14 @@ const AnswerForm = ({ questionId, close }: { questionId: string; close: any }) =
 
       console.log(error.message);
 
-      setInsertLoading(false);
+      setEditLoading(false);
     }
   };
 
   return (
     <Box pos='relative'>
       <LoadingOverlay
-        visible={insertLoading}
+        visible={editLoading}
         zIndex={1000}
         overlayProps={{ radius: 'sm', blur: 2 }}
         loaderProps={{ color: 'pink', type: 'bars' }}
@@ -122,6 +119,7 @@ const AnswerForm = ({ questionId, close }: { questionId: string; close: any }) =
           type='submit'
           className='mt-4'
           radius='md'
+          // loading={false}
         >
           Submit
         </Button>
@@ -130,4 +128,4 @@ const AnswerForm = ({ questionId, close }: { questionId: string; close: any }) =
   );
 };
 
-export default AnswerForm;
+export default EditAnswerForm;

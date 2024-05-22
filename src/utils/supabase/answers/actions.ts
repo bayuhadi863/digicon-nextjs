@@ -27,3 +27,16 @@ export const deleteAnswer = async (answerId: string) => {
 
   revalidatePath('/(home)/questions/[id]');
 };
+
+// update answer
+export const updateAnswer = async (answerId: string, answerData: any) => {
+  const supabase = createClient();
+
+  try {
+    await supabase.from('answers').update(answerData).eq('id', answerId);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/(home)/questions/[id]');
+};

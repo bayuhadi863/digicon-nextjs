@@ -13,10 +13,25 @@ export const insertTopic = async (data: any) => {
 };
 
 // fetch all topics
-export const fetchTopics = async () => {
+export const fetchTopics = async (page?: number) => {
   const supabase = createClient();
 
-  const { data: topics, error } = await supabase.from('topics').select('*').range(0, 8);
+  if (page) {
+    const dataEnd = page * 9;
+    const dataStart = dataEnd - 9;
+    const { data: topics, error } = await supabase
+      .from('topics')
+      .select('*')
+      .range(dataStart, dataEnd - 1);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return topics;
+  }
+
+  const { data: topics, error } = await supabase.from('topics').select('*');
 
   if (error) {
     throw new Error(error.message);
@@ -158,4 +173,16 @@ export const getRealtimeTopicFollowers = async () => {
     .subscribe();
 
   return topicFollowers;
+};
+
+export const fetchTopicsByFollowerId = async (userId: string) => {
+  const supabase = createClient();
+
+  const { data: topics, error } = await supabase.from('topics_with_followers').select('*').eq('follower_id', userId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return topics;
 };

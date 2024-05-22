@@ -143,6 +143,7 @@ const EditQuestionForm = ({ close, question }: { close: any; question: any }) =>
         visible={editLoading}
         zIndex={1000}
         overlayProps={{ radius: 'sm', blur: 2 }}
+        loaderProps={{ color: 'pink', type: 'bars' }}
       />
       <form
         onSubmit={form.onSubmit((values, event) => {

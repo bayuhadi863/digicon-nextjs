@@ -8,7 +8,7 @@ import MostFollowedTopics from '@/components/topics/most-followed-topics';
 import AllTopics from '@/components/topics/all-topics';
 // utils import
 
-const TopicPage = () => {
+const TopicPage = ({ searchParams }: { searchParams: any }) => {
   return (
     <div className='min-h-screen'>
       <div className='flex justify-between items-center mb-6'>
@@ -22,12 +22,12 @@ const TopicPage = () => {
         </Button>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-6'>
-        <PopularTopics />
+        <PopularTopics titleLarge={true} />
         <MostFollowedTopics />
       </div>
       <div>
         <Suspense fallback={<p>Loading topics...</p>}>
-          <AllTopics />
+          <AllTopics page={searchParams.page} />
         </Suspense>
       </div>
     </div>

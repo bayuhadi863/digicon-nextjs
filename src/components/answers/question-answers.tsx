@@ -1,22 +1,27 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 // component import
 import AnswerForm from './answer-form';
 import AnswersList from './answers-list';
 import AnswerModal from './answer-modal';
 // mantine import
 import { Button } from '@mantine/core';
+// utils import
+import { fetchAnswers } from '@/utils/supabase/answers/fetch';
 
-const QuestionAnswers = ({ questionId, userQuestion }: { questionId: string; userQuestion: boolean }) => {
+const QuestionAnswers = async ({ questionId, userQuestion, userId }: { questionId: string; userQuestion: boolean; userId: string }) => {
+  const answers = await fetchAnswers(questionId);
+
+  // check if there is userId in answers.user_id
+  const userAnswer = answers.find((answer) => answer.user_id === userId);
+
   return (
     <div>
       <div className='flex justify-between items-center'>
-        <h1 className='text-xl font-semibold'>0 Answers</h1>
-        {!userQuestion && <AnswerModal questionId={questionId} />}
+        <h1 className='text-xl font-semibold'>{answers.length} Answers</h1>
+        {!userQuestion && !userAnswer ? <AnswerModal questionId={questionId} /> : ''}
       </div>
       <div className='mt-6'>
-        <Suspense fallback={<p>Answers loading ...</p>}>
-          <AnswersList questionId={questionId} />
-        </Suspense>
+        <AnswersList answers={answers} />
       </div>
     </div>
   );

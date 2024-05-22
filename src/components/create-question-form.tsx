@@ -25,23 +25,7 @@ interface FormValues {
   image: any;
 }
 
-const CreateQuestionForm = ({ close }: { close: any }) => {
-  const [topicsData, setTopicsData] = useState<any>([]);
-  const [fetchLoading, setFetchLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchTopics = async () => {
-      const topics = await fetchTopicsForSelect();
-
-      setTopicsData(topics);
-    };
-
-    setFetchLoading(true);
-    fetchTopics().then(() => {
-      setFetchLoading(false);
-    });
-  }, []);
-
+const CreateQuestionForm = ({ close, topicsData }: { close: any; topicsData: any }) => {
   const [content, setContent] = useState('' as string);
   const [contentError, setContentError] = useState('' as string);
   const [insertLoading, setInsertLoading] = useState(false);
@@ -139,6 +123,7 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
         visible={insertLoading}
         zIndex={1000}
         overlayProps={{ radius: 'sm', blur: 2 }}
+        loaderProps={{ color: 'pink', type: 'bars' }}
       />
       <form
         onSubmit={form.onSubmit((values, event) => {
@@ -152,20 +137,17 @@ const CreateQuestionForm = ({ close }: { close: any }) => {
           key={form.key('title')}
           {...form.getInputProps('title')}
         />
-        {fetchLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <Select
-            label='Topic'
-            placeholder='Choose topic'
-            data={topicsData}
-            key={form.key('topic')}
-            {...form.getInputProps('topic')}
-            searchable
-            radius='md'
-            mt='md'
-          />
-        )}
+
+        <Select
+          label='Topic'
+          placeholder='Choose topic'
+          data={topicsData}
+          key={form.key('topic')}
+          {...form.getInputProps('topic')}
+          searchable
+          radius='md'
+          mt='md'
+        />
 
         <FileInput
           label='Image (optional)'

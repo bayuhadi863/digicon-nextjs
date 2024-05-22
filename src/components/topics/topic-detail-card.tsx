@@ -19,7 +19,7 @@ const TopicDetailCard = async ({ topicId }: { topicId: string }) => {
 
   return (
     <div>
-      <div className='flex justify-between items-start gap-6'>
+      <div className='flex justify-between items-start gap-4 lg:gap-6 flex-wrap'>
         <PageTitle>{topic.name}</PageTitle>
         <FollowButton
           topicId={topic.id}

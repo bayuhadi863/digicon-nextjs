@@ -20,9 +20,8 @@ const QuestionCard = ({ question }: { question: any }) => {
     <Card
       radius='md'
       withBorder
-      className='mb-4'
     >
-      <div className='flex justify-between items-center text-inherit'>
+      <div className='flex justify-between items-center text-inherit flex-wrap gap-2'>
         <Badge
           color='blue'
           // size='lg'
@@ -40,7 +39,7 @@ const QuestionCard = ({ question }: { question: any }) => {
       </div>
       <Link
         href={`/questions/${question.id}`}
-        className='font-medium text-lg my-2'
+        className='font-medium text-lg my-2 break-all whitespace-normal line-clamp-2'
       >
         {question.title}
       </Link>

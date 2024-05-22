@@ -4,8 +4,7 @@ import { fetchAnswers } from '@/utils/supabase/answers/fetch';
 // component import
 import AnswerCard from './answer-card';
 
-const AnswersList = async ({ questionId }: { questionId: string }) => {
-  const answers = await fetchAnswers(questionId);
+const AnswersList = async ({ answers }: { answers: any }) => {
 
   return (
     <div>
