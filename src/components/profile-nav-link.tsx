@@ -28,7 +28,7 @@ const ProfileNavLink = ({ toggleMobile }: { toggleMobile: any }) => {
   const router = useRouter();
 
   const handleLinkClick = () => {
-    router.push('profile');
+    router.push('/profile');
     toggleMobile();
   };
 
@@ -70,8 +70,8 @@ const ProfileNavLink = ({ toggleMobile }: { toggleMobile: any }) => {
       <div className='hidden lg:block'>
         <NavLink
           label={profile?.name}
-          component={Link}
-          href='/profile'
+          component='button'
+          onClick={handleLinkClick}
           leftSection={<ProfileAvatar profile={profile} />}
           px='lg'
           active={pathname === '/profile'}
