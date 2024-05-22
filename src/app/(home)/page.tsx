@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 // mantine import
 import { Button, Group } from '@mantine/core';
 // next js import
@@ -16,15 +16,21 @@ const HomePage = ({ searchParams }: { searchParams: any }) => {
         <h2 className='text-xl font-medium'>Create and Find Many Discussion About Information Technology.</h2>
         <div className='mt-8'>
           <h1 className='font-semibold text-2xl mb-4'>Followed Topic Questions</h1>
-          <QuestionsList page={searchParams.page} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <QuestionsList page={searchParams.page} />
+          </Suspense>
         </div>
       </div>
       <div>
         <div className='mb-4'>
-          <PopularQuestions />
+          <Suspense fallback={<p>Loading...</p>}>
+            <PopularQuestions />
+          </Suspense>
         </div>
         <div>
-          <PopularTopics titleLarge={false} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <PopularTopics titleLarge={false} />
+          </Suspense>
         </div>
       </div>
     </div>

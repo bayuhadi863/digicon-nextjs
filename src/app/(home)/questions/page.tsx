@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 // component import
 import SearchInput from '@/components/home/search-input';
 import AllQuestionsList from '@/components/questions/all-questions-list';
@@ -13,17 +13,23 @@ const QuestionPage = ({ searchParams }: { searchParams: any }) => {
           <SearchInput />
         </div>
         <h1 className='font-semibold text-2xl mt-6 mb-4'>All Questions</h1>
-        <AllQuestionsList
-          page={searchParams.page}
-          query={searchParams.query}
-        />
+        <Suspense fallback={<p>Loading...</p>}>
+          <AllQuestionsList
+            page={searchParams.page}
+            query={searchParams.query}
+          />
+        </Suspense>
       </div>
       <div>
         <div className='mb-4'>
-          <PopularQuestions />
+          <Suspense fallback={<p>Loading...</p>}>
+            <PopularQuestions />
+          </Suspense>
         </div>
         <div>
-          <PopularTopics titleLarge={false} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <PopularTopics titleLarge={false} />
+          </Suspense>
         </div>
       </div>
     </div>

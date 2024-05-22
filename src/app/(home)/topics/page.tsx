@@ -14,19 +14,23 @@ const TopicPage = ({ searchParams }: { searchParams: any }) => {
       <div className='flex justify-between items-center mb-6'>
         {/* <p>{currentUser.id}</p> */}
         <PageTitle>Topics</PageTitle>
-        <Button
+        {/* <Button
           size='md'
           radius='md'
         >
           Request Topic
-        </Button>
+        </Button> */}
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-6'>
-        <PopularTopics titleLarge={true} />
-        <MostFollowedTopics />
+        <Suspense fallback={<p>Loading...</p>}>
+          <PopularTopics titleLarge={true} />
+        </Suspense>
+        <Suspense fallback={<p>Loading...</p>}>
+          <MostFollowedTopics />
+        </Suspense>
       </div>
       <div>
-        <Suspense fallback={<p>Loading topics...</p>}>
+        <Suspense fallback={<p>Loading...</p>}>
           <AllTopics page={searchParams.page} />
         </Suspense>
       </div>

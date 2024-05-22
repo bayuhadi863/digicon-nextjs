@@ -14,25 +14,31 @@ const TopicDetailPage = ({ params, searchParams }: { params: { id: string }; sea
   return (
     <div className='min-h-screen grid grid-cols-1 lg:grid-cols-3 gap-12'>
       <div className='lg:col-span-2'>
-        <Suspense fallback={<p>Loading topic detail ...</p>}>
+        <Suspense fallback={<p>Loading...</p>}>
           <TopicDetailCard topicId={params.id} />
         </Suspense>
         <div className='mt-8'>
           <h1 className='font-semibold text-2xl mb-4'>Questions</h1>
           <div className='mt-6'>
-            <TopicQuestionsList
-              topicId={params.id}
-              page={searchParams.page}
-            />
+            <Suspense fallback={<p>Loading...</p>}>
+              <TopicQuestionsList
+                topicId={params.id}
+                page={searchParams.page}
+              />
+            </Suspense>
           </div>
         </div>
       </div>
       <div>
         <div className='mb-4'>
-          <PopularQuestions />
+          <Suspense fallback={<p>Loading...</p>}>
+            <PopularQuestions />
+          </Suspense>
         </div>
         <div>
-          <PopularTopics titleLarge={false} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <PopularTopics titleLarge={false} />
+          </Suspense>
         </div>
       </div>
     </div>

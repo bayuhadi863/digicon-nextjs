@@ -8,16 +8,20 @@ const QuestionDetailPage = ({ params }: { params: { id: string } }) => {
   return (
     <div className='min-h-screen grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12'>
       <div className='lg:col-span-2'>
-        <Suspense fallback={<p>Loading question detail ...</p>}>
+        <Suspense fallback={<p>Loading...</p>}>
           <QuestionDetail questionId={params.id} />
         </Suspense>
       </div>
       <div>
         <div className='mb-4'>
-          <PopularQuestions />
+          <Suspense fallback={<p>Loading...</p>}>
+            <PopularQuestions />
+          </Suspense>
         </div>
         <div>
-          <PopularTopics titleLarge={false} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <PopularTopics titleLarge={false} />
+          </Suspense>
         </div>
       </div>
     </div>
