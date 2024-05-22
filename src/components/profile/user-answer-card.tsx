@@ -9,15 +9,15 @@ const UserAnswerCard = ({ answer }: { answer: any }) => {
     return content.replace(/<\/?pre>/g, '');
   };
   return (
-    <Card>
+    <Card
+      radius='md'
+      withBorder
+      component={Link}
+      href={`/questions/${answer.question_id}`}
+    >
       <div className='mb-3'>
         <p className='text-sm font-bold mb-1'>Question Title:</p>
-        <Link
-          href={`/questions/${answer.question_id}`}
-          className='font-medium text-lg break-all whitespace-normal line-clamp-1'
-        >
-          {answer.question_title}
-        </Link>
+        <h3 className='font-medium text-lg break-all whitespace-normal line-clamp-1'>{answer.question_title}</h3>
       </div>
       <div>
         <p className='text-sm font-bold mb-1'>Your Answer:</p>
