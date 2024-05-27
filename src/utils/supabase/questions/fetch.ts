@@ -90,7 +90,7 @@ export const fetchQuestionsAnswersCount = async () => {
 export const fetchQuestionsByUserId = async (userId: string) => {
   const supabase = createClient();
 
-  const { data: questions, error } = await supabase.from('followed_topic_questions').select('*').eq('user_id', userId).order('created_at', { ascending: false });
+  const { data: questions, error } = await supabase.from('questions_with_topics').select('*').eq('user_id', userId).order('created_at', { ascending: false });
 
   if (error) {
     throw new Error(error.message);
