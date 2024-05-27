@@ -13,14 +13,12 @@ const PopularQuestionCard = ({ question }: { question: any }) => {
     <Card
       withBorder
       radius='md'
+      shadow='sm'
+      component={Link}
+      href={`/questions/${question.id}`}
     >
       <div className='mb-2'>
-        <Link
-          href={`/questions/${question.id}`}
-          className='font-semibold line-clamp-2 break-all whitespace-normal'
-        >
-          {question.title}
-        </Link>
+        <h3 className='font-semibold line-clamp-2 break-all whitespace-normal'>{question.title}</h3>
       </div>
 
       <div

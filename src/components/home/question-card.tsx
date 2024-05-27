@@ -28,6 +28,7 @@ const QuestionCard = ({ question }: { question: any }) => {
     <Card
       radius='md'
       withBorder
+      shadow='sm'
       component={Link}
       href={`/questions/${question.id}`}
     >

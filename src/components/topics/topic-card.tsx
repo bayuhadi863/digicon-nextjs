@@ -18,6 +18,7 @@ const TopicCard = async ({ topic }: { topic: any }) => {
     <Card
       withBorder
       radius='md'
+      shadow='sm'
       component={Link}
       href={`/topics/${topic.id}`}
     >
