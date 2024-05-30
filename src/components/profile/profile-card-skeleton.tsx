@@ -9,7 +9,7 @@ const ProfileCardSkeleton = () => {
         <Skeleton
           height={110}
           circle
-          mb='xl'
+          // mb='xl'
         />
         <div className='flex flex-col items-center md:items-start '>
           {/* <h3 className='text-2xl font-semibold lg:text-3xl mb-2 break-all whitespace-normal'>{profile.name}</h3> */}
