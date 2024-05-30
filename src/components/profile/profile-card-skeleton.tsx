@@ -15,7 +15,7 @@ const ProfileCardSkeleton = () => {
           {/* <h3 className='text-2xl font-semibold lg:text-3xl mb-2 break-all whitespace-normal'>{profile.name}</h3> */}
 
           <Skeleton
-            height={40}
+            height={35}
             width={300}
             radius='md'
             className='mb-4'
@@ -24,7 +24,6 @@ const ProfileCardSkeleton = () => {
             height={20}
             width={150}
             radius='md'
-            className='mb-4'
           />
         </div>
       </div>
