@@ -11,6 +11,7 @@ import { insertAnswerLike, deleteAnswerLike } from '@/utils/supabase/answers/act
 
 const LikeAnswerButton = ({ answerId, userAnswerLikes }: { answerId: string; userAnswerLikes: any }) => {
   const [likeLoading, setLikeLoading] = useState(false);
+  const [isLiked, setIsLiked] = useState(userAnswerLikes.length > 0);
 
   const handleLike = async () => {
     try {
@@ -18,6 +19,7 @@ const LikeAnswerButton = ({ answerId, userAnswerLikes }: { answerId: string; use
       await insertAnswerLike({
         answer_id: answerId,
       });
+      setIsLiked(true);
       setLikeLoading(false);
       notifications.show({
         title: 'Berhasil!',
@@ -38,6 +40,7 @@ const LikeAnswerButton = ({ answerId, userAnswerLikes }: { answerId: string; use
     try {
       setLikeLoading(true);
       await deleteAnswerLike(answerLikeId);
+      setIsLiked(false);
       setLikeLoading(false);
       notifications.show({
         title: 'Berhasil!',
@@ -56,7 +59,7 @@ const LikeAnswerButton = ({ answerId, userAnswerLikes }: { answerId: string; use
 
   return (
     <>
-      {userAnswerLikes.length > 0 ? (
+      {isLiked ? (
         <ActionIcon
           variant='filled'
           size='sm'
