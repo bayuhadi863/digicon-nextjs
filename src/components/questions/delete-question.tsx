@@ -19,7 +19,9 @@ const DeleteQuestion = ({ question }: { question: any }) => {
     try {
       setDeleteLoading(true);
 
-      await deleteImage(question.image_url);
+      if (question.image_url != null || question.image_url != '') {
+        await deleteImage(question.image_url);
+      }
 
       await deleteQuestion(question.id);
 
