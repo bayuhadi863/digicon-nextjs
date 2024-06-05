@@ -15,11 +15,14 @@ const DeleteQuestion = ({ question }: { question: any }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
+  // console.log('image', question.image_url);
+
   const handleDelete = async () => {
     try {
       setDeleteLoading(true);
 
-      if (question.image_url != null || question.image_url != '') {
+      // console.log('image', question.image_url);
+      if (question.image_url != null && question.image_url != '') {
         await deleteImage(question.image_url);
       }
 
@@ -34,6 +37,12 @@ const DeleteQuestion = ({ question }: { question: any }) => {
         message: 'Your question has been successfully deleted.',
         color: 'green',
       });
+
+      // notifications.show({
+      //   title: 'Question successfully deleted',
+      //   message: 'Your question has been successfully deleted.',
+      //   color: 'green',
+      // });
     } catch (error) {
       setDeleteLoading(false);
 

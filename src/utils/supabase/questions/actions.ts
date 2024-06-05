@@ -59,8 +59,6 @@ export const insertQuestionData = async (topicId: string, title: string, content
     if (topicFollowers.length < 1) {
       await supabase.from('topic_followers').insert({ topic_id: topicId });
     }
-
-    
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -94,6 +92,10 @@ export const updateQuestionImages = async (imageUrl: string, questionId: string)
 // update question
 export const updateQuestionData = async (questionId: string, topicId: string, title: string, content: string, imageUrl: string | null) => {
   try {
+    // get question by questionId
+    const supabase = createClient();
+    const { data: question, error } = await supabase.from('question_details').select('*').eq('id', questionId);
+
     await updateQuestion(
       {
         topic_id: topicId,
@@ -104,7 +106,16 @@ export const updateQuestionData = async (questionId: string, topicId: string, ti
     );
 
     if (imageUrl) {
-      await updateQuestionImages(imageUrl, questionId);
+      if (question!.length > 0) {
+        if (question![0].image_url !== null && question![0].image_url !== '') {
+          await updateQuestionImages(imageUrl, questionId);
+        } else {
+          await insertQuestionImages({
+            question_id: questionId,
+            image_url: imageUrl,
+          });
+        }
+      }
     }
   } catch (error: any) {
     throw new Error(error.message);
