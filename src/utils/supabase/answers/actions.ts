@@ -40,3 +40,37 @@ export const updateAnswer = async (answerId: string, answerData: any) => {
 
   revalidatePath('/(home)/questions/[id]');
 };
+
+// insert answer_likes
+export const insertAnswerLike = async (answerLikeData: any) => {
+  const supabase = createClient();
+
+  try {
+    const { data, error } = await supabase.from('answer_likes').insert(answerLikeData);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/(home)/questions/[id]');
+};
+
+// delete answer_likes by id
+export const deleteAnswerLike = async (answerLikeId: string) => {
+  const supabase = createClient();
+
+  try {
+    const { error } = await supabase.from('answer_likes').delete().eq('id', answerLikeId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/(home)/questions/[id]');
+};

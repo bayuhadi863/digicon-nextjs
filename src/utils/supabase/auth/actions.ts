@@ -8,7 +8,11 @@ export const logoutUser = async () => {
   const supabase = createClient();
 
   try {
-    await supabase.auth.signOut();
+    let { error } = await supabase.auth.signOut();
+
+    if (error) {
+      throw new Error(error.message);
+    }
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -20,10 +24,14 @@ export const register = async (email: string, password: string, name: string, us
   const supabase = createClient();
 
   try {
-    await supabase.auth.signUp({
+    let { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
+
+    if (error) {
+      throw new Error(error.message);
+    }
 
     await insertProfile({
       name: name,
@@ -41,11 +49,19 @@ export const login = async (email: string, password: string) => {
   const supabase = createClient();
 
   try {
-    await supabase.auth.signInWithPassword({
+    let { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
+
+    if (error) {
+      console.log('error', error);
+      throw new Error(error.message);
+    }
+
+    console.log('Login success');
   } catch (error: any) {
+    console.log('error', error);
     throw new Error(error.message);
   }
 

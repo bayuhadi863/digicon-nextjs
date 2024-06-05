@@ -56,7 +56,7 @@ const QuestionDetail = async ({ questionId }: { questionId: string }) => {
             alt='User'
             size={26}
           />
-          <p className='text-sm font-semibold break-all whitespace-normal line-clamp-1'>{profile.name}</p>
+          <p className='text-sm font-semibold break-all whitespace-normal line-clamp-1'>@{profile.username}</p>
         </div>
         <Text
           size='xs'
