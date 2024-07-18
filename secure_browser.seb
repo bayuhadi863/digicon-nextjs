@@ -1,0 +1,13 @@
+{
+  "safeExamBrowserConfiguration": {
+    "startURL": "https://digicon-nextjs.vercel.app/",
+    "examSettings": {
+      "deactivateKeys": true,
+      "kioskMode": "fullscreen"
+    },
+    "network": {
+      "allowURLOverrides": false
+    },
+    "quitPassword": ""
+  }
+}
