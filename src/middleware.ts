@@ -4,15 +4,6 @@ import { updateSession } from '@/utils/supabase/middleware';
 import { createClient } from '@/utils/supabase/server';
 
 export async function middleware(request: NextRequest) {
-  // const response = await updateSession(request);
-
-  // // Mendapatkan informasi pengguna dari sesi yang telah diperbarui
-  // const user = response.cookies.get('user');
-  const userAgent = request.headers.get('user-agent') || '';
-  if (!userAgent.includes('SEB')) {
-    return NextResponse.redirect('https://digicon-nextjs.vercel.app//access-denied');
-  }
-
   const supabase = createClient();
 
   const {
